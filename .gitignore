@@ -25,3 +25,6 @@ replay_pid*
 
 *out/*
 *target/*
+
+*SpringMVCEclipse/.settings/*
+*SpringMVNMaven/target/*
