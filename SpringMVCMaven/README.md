@@ -1,1 +1,1 @@
-Baca tutorial: [https://www.timposulabs.com/blog/spring-mvc-maven-xml](https://www.timposulabs.com/blog/spring-mvc-maven-xml)
+Baca tutorial: [https://timposulabs.com/blog/spring-mvc-maven-xml](https://timposulabs.com/blog/spring-mvc-maven-xml)
