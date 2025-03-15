@@ -12,7 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleProductNotFoundException(ProductNotFoundException ex) {
         Map<String, String> response = new HashMap<>();
         response.put("error", "Product Not Found");
