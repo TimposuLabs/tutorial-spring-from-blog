@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class PersonMapperToDTO implements Function<Person, PersonDTO> {
+public class PersonMapperToEntity implements Function<PersonDTO, Person> {
     @Override
-    public PersonDTO apply(Person person) {
-        return new PersonDTO(person.getId(), person.getFirstName(), person.getLastName());
+    public Person apply(PersonDTO personDTO) {
+        return new Person(personDTO.id(), personDTO.firstName(), personDTO.lastName());
     }
 }
