@@ -1,6 +1,7 @@
 package com.timposulabs.demo_spring_boot_rest_api.service;
 
 import com.timposulabs.demo_spring_boot_rest_api.dto.ProductDTO;
+import com.timposulabs.demo_spring_boot_rest_api.exception.NotFoundException;
 import com.timposulabs.demo_spring_boot_rest_api.model.Product;
 import com.timposulabs.demo_spring_boot_rest_api.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
     public ProductDTO findById(Long id) {
         return productRepository.findById(id)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("ID Not Found"));
+                .orElseThrow(() -> new NotFoundException("ID Not Found"));
     }
 
     @Override
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDTO update(Long id, ProductDTO productDTO) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ID Not Found"));
+                .orElseThrow(() -> new NotFoundException("ID Not Found"));
         product.setName(productDTO.name());
         product.setDescription(productDTO.description());
         product.setPrice(productDTO.price());
@@ -49,7 +50,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ID Not Found"));
+        productRepository.delete(product);
     }
 
     // Conversion between DTO to Entity
