@@ -29,7 +29,8 @@ public class PersonController {
     }
 
     @GetMapping("/list")
-    public String listPerson(Model model, @PageableDefault(size = 5) Pageable pageable) {
+    public String listPerson(
+        Model model, @PageableDefault(size = 5) Pageable pageable) {
         Page<PersonDTO> persons = personService.getAllPersons(pageable);
         model.addAttribute("persons", persons);
         return "person/person-list";
@@ -75,5 +76,18 @@ public class PersonController {
     public String deletePerson(@RequestParam("id") Long id) {
         personService.deletePerson(id);
         return "redirect:/person/list";
-    }    
+    }
+    
+    @GetMapping("/search")
+    public String searchPersons(
+            Model model,
+            @PageableDefault(size = 5, sort = "firstName") Pageable pageable,
+            @RequestParam(name = "keyword", required = false) String keyword) {
+        
+        Page<PersonDTO> personPage = personService.search(keyword, pageable);
+        
+        model.addAttribute("persons", personPage);
+        model.addAttribute("keyword", keyword); // Dikembalikan ke view untuk mengisi kotak input
+        return "person/person-list";
+    }
 }

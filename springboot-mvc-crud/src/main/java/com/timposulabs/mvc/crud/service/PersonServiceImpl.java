@@ -56,6 +56,20 @@ public class PersonServiceImpl implements PersonService {
         personRepository.delete(person);
     }
 
+    @Override
+    public Page<PersonDTO> search(String keyword, Pageable pageable) {
+        Page<Person> persons;
+        if (keyword != null && !keyword.isBlank()) {
+            // Kita kirim keyword yang sama untuk ketiga parameter (firstName, lastName, email)
+            persons = personRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(
+                keyword, keyword, keyword, pageable
+            );
+        } else {
+            persons = personRepository.findAll(pageable);
+        }
+        return persons.map(this::toDTO);
+    }
+
     // handle email unique constraint for validation
     @Override
     public boolean isEmailUnique(String email, Long id) {

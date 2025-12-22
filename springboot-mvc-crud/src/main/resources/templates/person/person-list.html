@@ -8,12 +8,48 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
 	<div class="container">
 		<div class="mt-5">
 			<h3>Person List</h3>
 			<hr />
-			<a th:href="@{/person/form}" class="btn btn-primary mb-3">Add Person</a>
+			<!-- Container Flexbox untuk tombol dan dropdown -->
+			<div class="d-flex justify-content-between align-items-center mb-3">
+
+				<!-- Tombol Add Person di sisi Kiri -->
+				<a th:href="@{/person/form}" class="btn btn-primary">Add Person</a>
+
+				<!-- Bagian Kanan: Gabungan Search dan Dropdown -->
+				<div class="d-flex align-items-center gap-3">
+
+					<!-- Form Search -->
+					<form th:action="@{/person/search}" method="get" class="d-flex">
+						<div class="input-group input-group-sm">
+							<input type="text" name="keyword" class="form-control" placeholder="Search..."
+								th:value="${keyword}">
+							<button class="btn btn-outline-secondary" type="submit">
+								<i class="bi bi-search"></i> Cari
+							</button>
+						</div>
+						<!-- Bawa info size agar tidak reset saat search -->
+						<input type="hidden" name="size" th:value="${persons.size}" />
+					</form>
+
+					<!-- Form Dropdown size page di sisi Kanan -->
+					<form th:action="@{/person/list}" method="get" class="d-flex align-items-center">
+						<span class="me-2 text-secondary">Show:</span>
+						<select name="size" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+							<option th:value="5" th:selected="${persons.size == 5}">5</option>
+							<option th:value="10" th:selected="${persons.size == 10}">10</option>
+							<option th:value="20" th:selected="${persons.size == 20}">20</option>
+						</select>
+						<!-- Reset ke halaman 0 saat ganti size -->
+						<input type="hidden" name="page" value="0" />
+					</form>
+				</div>
+			</div>
+
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
@@ -42,6 +78,25 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<!-- Navigasi Halaman -->
+			<nav>
+				<ul class="pagination">
+					<li class="page-item" th:classappend="${!persons.hasPrevious()} ? 'disabled'">
+						<a class="page-link"
+							th:href="@{/person/list(page=${persons.number - 1}, size=${persons.size})}">Prev</a>
+					</li>
+					<li class="page-item" th:each="i : ${#numbers.sequence(0, persons.totalPages - 1)}"
+						th:classappend="${persons.number == i} ? 'active'">
+						<a class="page-link" th:href="@{/person/list(page=${i}, size=${persons.size})}"
+							th:text="${i + 1}"></a>
+					</li>
+					<li class="page-item" th:classappend="${!persons.hasNext()} ? 'disabled'">
+						<a class="page-link"
+							th:href="@{/person/list(page=${persons.number + 1}, size=${persons.size})}">Next</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

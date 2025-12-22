@@ -12,4 +12,5 @@ public interface PersonService {
     PersonDTO updatePerson(Long id, PersonDTO personDTO);
     void deletePerson(Long id);
     boolean isEmailUnique(String email, Long id); // handle email unique
+    Page<PersonDTO> search(String keyword, Pageable pageable);
 }
