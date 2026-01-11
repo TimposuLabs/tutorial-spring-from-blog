@@ -17,9 +17,12 @@
         <nav th:fragment="navbar">
             <h3>Navigasi</h3>
             <ul>
-                <li><a th:href="@{/}">Beranda</a></li>
-                <li><a th:href="@{/service}">Layanan</a></li>
-                <li><a th:href="@{/contact}">Kontak</a></li>
+                <li><a th:href="@{/}" 
+						th:classappend="${page == 'home'} ? 'active' : ''">Beranda</a></li>
+                <li><a th:href="@{/service}"
+						th:classappend="${page == 'service'} ? 'active' : ''">Layanan</a></li>
+                <li><a th:href="@{/contact}"
+						th:classappend="${page == 'contact'} ? 'active' : ''" >Kontak</a></li>
             </ul>
         </nav>
 

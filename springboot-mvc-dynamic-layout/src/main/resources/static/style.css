@@ -52,9 +52,11 @@ nav ul li a {
     transition: 0.3s;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
     background-color: #3498db;
     color: white;
+	transition: 0.3s;
 }
 
 /* Area Konten */
