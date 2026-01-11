@@ -1,0 +1,27 @@
+<!-- Layout Utama (Parent Template) -->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: header_common}">
+</head>
+
+<body>
+
+	<!-- header di ambil dari fragment -->
+	<div th:replace="~{fragments :: header}"></div>
+
+	<div class="container">
+		
+		<!-- navbar di ambil dari fragment -->
+		<div th:replace="~{fragments :: navbar}"></div>
+
+		<!-- Area Konten Dinamis -->
+		<main th:insert="~{__${content}__}"></main>
+
+	</div>	
+
+	<!-- Footer diambil dari fragment -->
+	<div th:replace="~{fragments :: copyright}"></div>
+
+</body>
+</html>

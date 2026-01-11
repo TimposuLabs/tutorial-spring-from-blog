@@ -1,0 +1,38 @@
+<!-- Membuat Fragment (Komponen yang bisa di Reusable) -->
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header_common">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Dynamic Layout</title>
+   	<link rel="stylesheet" th:href="@{style.css}"/>
+</head>
+<body>
+
+    <header th:fragment="header">
+        <h1 style="margin:0;">MyWebsite</h1>
+    </header>
+
+    <div class="container">
+        <nav th:fragment="navbar">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a th:href="@{/}">Beranda</a></li>
+                <li><a th:href="@{/service}">Layanan</a></li>
+                <li><a th:href="@{/contact}">Kontak</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h2>Konten Utama</h2>
+            <p>Selamat datang! di Website Kami.</p>
+        </main>
+        
+    </div>
+
+    <footer th:fragment="copyright">
+        <p>&copy; 2026 Hak Cipta MyWebsite.</p>
+    </footer>
+
+</body>
+</html>
